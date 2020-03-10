@@ -1,6 +1,6 @@
-staticfiles/
-mediafiles/
-
+static/
+media/
+migrations/
 ### OSX ###
 .DS_Store
 .AppleDouble

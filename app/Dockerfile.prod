@@ -5,8 +5,11 @@
 # pull official base image
 FROM python:3.7.3 as builder
 
+# app name
+ENV MY_APP_NAME=app
+
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/$MY_APP_NAME
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -19,12 +22,12 @@ RUN apt-get update \
 # lint
 RUN python -m pip install --upgrade pip
 # RUN pip install flake8
-COPY . /usr/src/app/
+COPY . /usr/src/$MY_APP_NAME/
 # RUN flake8 --ignore=E501,F401 .
 
 # install dependencies
 COPY ./requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/$MY_APP_NAME/wheels -r requirements.txt
 
 
 #########
@@ -34,25 +37,28 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 # pull official base image
 FROM python:3.7.3
 
+# app name
+ENV MY_APP_NAME=app
+
 # create directory for the app user
-RUN mkdir -p /home/app
+RUN mkdir -p /home/$MY_APP_NAME
 
 # create the app user
 # RUN groupadd app && adduser -S app -G app
 
 # create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
+ENV HOME=/home/$MY_APP_NAME
+ENV APP_HOME=/home/$MY_APP_NAME/web
 RUN mkdir $APP_HOME
-RUN mkdir $APP_HOME/staticfiles
-RUN mkdir $APP_HOME/mediafiles
+RUN mkdir $APP_HOME/static
+RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
 # install dependencies
 RUN apt-get update && apt-get install -y libpq-dev \
     && apt install -y netcat
-COPY --from=builder /usr/src/app/wheels /wheels
-COPY --from=builder /usr/src/app/requirements.txt .
+COPY --from=builder /usr/src/$MY_APP_NAME/wheels /wheels
+COPY --from=builder /usr/src/$MY_APP_NAME/requirements.txt .
 RUN python -m pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
@@ -69,4 +75,6 @@ COPY . $APP_HOME
 # USER app
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
+# run entrypoint.sh
+ENV ENTRYPOINT_PROD_FILE_PATH=/home/$MY_APP_NAME/web/entrypoint.prod.sh
+ENTRYPOINT ["sh", "-c", "echo $ENTRYPOINT_FILE_PATH"]
