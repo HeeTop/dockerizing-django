@@ -20,16 +20,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", default="password")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-IS_DOCKER = int(os.environ.get("IS_DOCKER"), default=0)
-DEBUG = int(os.environ.get("DEBUG", default=0))
+IS_DOCKER = int(os.environ.get("IS_DOCKER", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 
-if DEBUG:
-    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+if IS_DOCKER:
+    if DEBUG:
+        ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+    else:
+        ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS")
 else:
-    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS")
+    ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -113,13 +116,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
