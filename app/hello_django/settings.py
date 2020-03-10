@@ -23,11 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+IS_DOCKER = int(os.environ.get("IS_DOCKER"), default=0)
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-# TODK: ALLOWED_HOSTS url
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-
+if DEBUG:
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+else:
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS")
 
 # Application definition
 
