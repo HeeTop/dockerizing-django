@@ -6,8 +6,10 @@
 $ sudo apt-get -y update
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
-$ sudo usermod -aG docker your-user
+$ sudo usermod -aG docker $USER
+$ sudo systemctl restart docker
 
+# 재접속 후
 # Test
 $ sudo docker run hello-world
 $ sudo docker --version
@@ -16,7 +18,7 @@ $ sudo docker --version
 ### install Docker Compose in Ubuntu[#link](https://docs.docker.com/compose/install/)
 
 ```
-$ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 $ sudo chmod +x /usr/local/bin/docker-compose
 $ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
