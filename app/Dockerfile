@@ -22,5 +22,4 @@ RUN pip install -r requirements.txt
 COPY . /usr/src/$MY_APP_NAME/
 
 # run entrypoint.sh
-ENV ENTRYPOINT_FILE_PATH=/usr/src/$MY_APP_NAME/entrypoint.sh
-ENTRYPOINT ["sh", "-c", "echo $ENTRYPOINT_FILE_PATH"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

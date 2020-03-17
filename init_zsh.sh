@@ -1,3 +1,4 @@
+#!/bin/sh
 # init
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get -y install git
@@ -17,7 +18,7 @@ sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zs
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # auto jump
-# git clone git://github.com/wting/autojump.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump && cd ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump && python3 install.py&& cd
+git clone https://github.com/wting/autojump.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump && cd ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump && python3 install.py&& cd
 
 # syntax highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -25,7 +26,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 echo "source ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 
 # add plugin
-echo "plugins=(git zsh-autosuggestions)" >> ${ZDOTDIR:-$HOME}/.zshrc
+echo "plugins=(git zsh-autosuggestions autojump)" >> ${ZDOTDIR:-$HOME}/.zshrc
 
 # theme
 echo "ZSH_THEME"="\"agnoster\"" >> ${ZDOTDIR:-$HOME}/.zshrc

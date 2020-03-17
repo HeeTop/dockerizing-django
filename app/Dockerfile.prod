@@ -75,6 +75,4 @@ COPY . $APP_HOME
 # USER app
 
 # run entrypoint.prod.sh
-# run entrypoint.sh
-ENV ENTRYPOINT_PROD_FILE_PATH=/home/$MY_APP_NAME/web/entrypoint.prod.sh
-ENTRYPOINT ["sh", "-c", "echo $ENTRYPOINT_FILE_PATH"]
+ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
