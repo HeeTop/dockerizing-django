@@ -56,4 +56,7 @@ $ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
 $ docker ps
 $ docker-compose ps
 ```
-
+#### RMI
+```
+$ docker rmi -f $(sudo docker images -f "dangling=true" -q) # delete none images
+```
