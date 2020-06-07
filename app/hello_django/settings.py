@@ -27,10 +27,7 @@ IS_DOCKER = int(os.environ.get("IS_DOCKER", default=0))
 DEBUG = int(os.environ.get("DEBUG", default=1))
 
 if IS_DOCKER:
-    if DEBUG:
-        ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-    else:
-        ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS")
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 else:
     ALLOWED_HOSTS = ["*"]
 
